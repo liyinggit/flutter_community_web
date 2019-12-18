@@ -166,11 +166,9 @@ class _loginState extends State<login> {
             ],
           ),
         )),
-        (_media.height >= 600)
-            ? SizedBox(
-                height: _media.height * 0.3,
-              )
-            : Container(),
+        SizedBox(
+          height: _media.height * 0.3,
+        ),
       ],
     );
 
@@ -226,16 +224,14 @@ class _loginState extends State<login> {
             ),
           ),
         ),
-        (_media.height >= 600)
-            ? SizedBox(
-                height: _media.height * 0.15,
-              )
-            : Container(),
+        SizedBox(
+          height: _media.height * 0.15,
+        ),
       ],
     );
 
     return new Scaffold(
-      body: (_media.height >= 500)
+      body: (_media.height >= 800)
           ? Container(
               width: _media.width,
               height: _media.height,
