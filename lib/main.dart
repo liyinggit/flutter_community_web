@@ -11,8 +11,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,  //去除右上角的debug标签
-      theme: new ThemeData(primaryColor: Colors.grey), //主题颜色
-      home: home(),
+      home: login(),
       routes: <String,WidgetBuilder>{
         "login":(BuildContext context) => login(),
         "home":(BuildContext context) => home(),
