@@ -104,6 +104,9 @@ class _loginState extends State<login> {
                   //设置按钮圆角
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0)),
+                  onPressed: () {
+                    Navigator.pushNamed(context, "home");
+                  },
                 ),
                 margin: EdgeInsets.only(right: 10),
               ),
