@@ -6,21 +6,9 @@ class home extends StatefulWidget {
   _homeState createState() => _homeState();
 }
 
-class Menu {
-  String title;
-  IconData icon;
-
-  Menu({this.title, this.icon});
-}
-
-List<Menu> menuItems = [
-  Menu(title: "Dashboard", icon: Icons.dashboard),
-  Menu(title: "Notifications", icon: Icons.notification_important),
-  Menu(title: "Web UI", icon: Icons.web),
-  Menu(title: "Charts", icon: Icons.insert_chart),
-];
-
 class _homeState extends State<home> {
+  bool collapsed = false;
+
   @override
   Widget build(BuildContext context) {
     final _media = MediaQuery.of(context).size;
@@ -28,59 +16,66 @@ class _homeState extends State<home> {
 
     Widget sideBarMenu = Container(
       width: 0.2 * _media.width,
-      height: 0.9 *_media.height,
+      height: 0.9 * _media.height,
       decoration: BoxDecoration(boxShadow: [
         BoxShadow(blurRadius: 10, color: Colors.black12, spreadRadius: 2)
-      ], color: Color(0xFF272D34)),
-      child: new Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          SizedBox(
-            height: 0.1 * _media.height,
-          ),
-          Expanded(
-            child: ListView.separated(
-              itemBuilder: (BuildContext context, int index) {
-                return InkWell(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.transparent,
-                    ),
-                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                    margin: EdgeInsets.symmetric(horizontal: 8),
-                    child: Row(
-                      children: <Widget>[
-                        Icon(
-                          Icons.kitchen,
-                          color: Colors.white30,
-                          size: 10,
-                        ),
-                        SizedBox(
-                          width: 10,
-                        ),
-                        Text(
-                          "name",
-                          style: TextStyle(
-                              color: Colors.white70,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold),
-                        )
-                      ],
-                    ),
-                  ),
-                );
-              },
-              separatorBuilder: (context, counter) {
-                return Divider(
-                  height: 1,
-                );
-              },
-              itemCount: menuItems.length,
+      ], color: Colors.grey[500]),
+      child: Scrollbar(
+        child: ListView(
+          children: <Widget>[
+            ExpansionTile(
+              title: Text(
+                "小区信息",
+                style: TextStyle(fontSize: 30, fontWeight: FontWeight.w400),
+              ),
+              backgroundColor: Colors.cyan.withOpacity(0.025),
+              children: <Widget>[
+                ListTile(
+                  title: Text("小区列表"),
+                ),
+                ListTile(
+                  title: Text("开门记录"),
+                )
+              ],
             ),
-          ),
-        ],
+            ExpansionTile(
+              title: Text(
+                "导入功能",
+                style: TextStyle(fontSize: 30, fontWeight: FontWeight.w400),
+              ),
+              backgroundColor: Colors.orangeAccent.withOpacity(0.025),
+              children: <Widget>[
+                ListTile(
+                  title: Text("业主资料"),
+                ),
+              ],
+            ),
+            ExpansionTile(
+              title: Text(
+                "设备运维",
+                style: TextStyle(fontSize: 30, fontWeight: FontWeight.w400),
+              ),
+              backgroundColor: Colors.blue.withOpacity(0.025),
+              children: <Widget>[
+                ListTile(
+                  title: Text("设备管理"),
+                ),
+                ListTile(
+                  title: Text("维修管理"),
+                ),
+                ListTile(
+                  title: Text("配置管理"),
+                ),
+                ListTile(
+                  title: Text("设备类型配置"),
+                ),
+                ListTile(
+                  title: Text("故障类型配置"),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
 
@@ -92,7 +87,6 @@ class _homeState extends State<home> {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             SizedBox(
-              height: _media.height * 0.1,
               width: _media.width,
               child: AppBar(
                 elevation: 4,
@@ -102,6 +96,30 @@ class _homeState extends State<home> {
                   style: TextStyle(color: Colors.black),
                 ),
                 backgroundColor: Colors.white,
+                leading: IconButton(
+                  color: Colors.black,
+                  icon: (collapsed) ? Icon(Icons.menu) : Icon(Icons.close),
+                  onPressed: () {
+                    setState(() {
+                      collapsed = !collapsed;
+                    });
+                  },
+                ),
+                actions: <Widget>[
+                  Container(
+                    margin: EdgeInsets.all(10.0),
+                    child: RaisedButton(
+                      color: Colors.amber,
+                      child: Text(
+                        "logout",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      onPressed: () {
+                        Navigator.popAndPushNamed(context, "login");
+                      },
+                    ),
+                  ),
+                ],
               ),
             ),
             Container(
@@ -110,7 +128,7 @@ class _homeState extends State<home> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  sideBarMenu,
+                  (collapsed) ? Container() : sideBarMenu,
                   Expanded(
                     child: Container(),
                   )

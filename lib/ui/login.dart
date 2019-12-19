@@ -105,7 +105,7 @@ class _loginState extends State<login> {
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0)),
                   onPressed: () {
-                    Navigator.pushNamed(context, "home");
+                    Navigator.pushReplacementNamed(context, "home");
                   },
                 ),
                 margin: EdgeInsets.only(right: 10),
