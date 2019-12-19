@@ -32,6 +32,9 @@ class _homeState extends State<home> {
               children: <Widget>[
                 ListTile(
                   title: Text("小区列表"),
+                  onTap: (){
+                    Navigator.pushNamed(context, "cellList");
+                  },
                 ),
                 ListTile(
                   title: Text("开门记录"),
@@ -78,6 +81,8 @@ class _homeState extends State<home> {
         ),
       ),
     );
+
+
 
     return Material(
       child: Container(
@@ -130,7 +135,24 @@ class _homeState extends State<home> {
                 children: <Widget>[
                   (collapsed) ? Container() : sideBarMenu,
                   Expanded(
-                    child: Container(),
+                    child: Container(
+                      height: _media.height *0.8,
+                      child: Center(
+                        child:Column(
+                          children: <Widget>[
+                            SizedBox(height:0.2 * _media.height),
+                            Expanded(
+                              child: Column(
+                                children: <Widget>[
+                                  Text("欢迎user登录SYSTEM",style: TextStyle(fontSize: 30),),
+                                  Text("上次登录时间:",style: TextStyle(fontSize: 28),)
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
                   )
                 ],
               ),
