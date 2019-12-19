@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_community_web/common/commonHeader.dart';
 
 class cellList extends StatefulWidget {
   @override
@@ -54,18 +55,24 @@ class _cellListState extends State<cellList> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  Icon(
-                    Icons.border_color,
-                    color: Colors.cyan,
+                  IconButton(
+                    icon:Icon(Icons.border_color, color: Colors.cyan,),
+                    onPressed: (){
+                      Navigator.pushNamed(context, "cellInformation");
+                    },
                   ),
-                  Icon(
-                    Icons.business,
-                    color: Colors.green,
+                  IconButton(
+                    icon:Icon(Icons.business, color: Colors.green,),
+                    onPressed: (){
+                      Navigator.pushNamed(context, "cellInformation");
+                    },
                   ),
-                  Icon(
-                    Icons.delete,
-                    color: Colors.redAccent,
-                  )
+                  IconButton(
+                    icon:Icon(Icons.delete, color: Colors.redAccent,),
+                    onPressed: (){
+                      Navigator.pushNamed(context, "cellInformation");
+                    },
+                  ),
                 ],
               ),
             ),
@@ -88,42 +95,8 @@ class _cellListState extends State<cellList> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            SizedBox(
-              width: _media.width,
-              child: AppBar(
-                elevation: 4,
-                centerTitle: true,
-                title: Text(
-                  "小区列表",
-                  style: TextStyle(color: Colors.black),
-                ),
-                backgroundColor: Colors.white,
-                leading: IconButton(
-                  color: Colors.black,
-                  icon: Icon(Icons.menu),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-                actions: <Widget>[
-                  Container(
-                    margin: EdgeInsets.all(10.0),
-                    child: RaisedButton(
-                      color: Colors.amber,
-                      child: Text(
-                        "logout",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      onPressed: () {
-                        //清除之前的所有路由再push到新路由login上
-                        Navigator.pushNamedAndRemoveUntil(
-                            context, "login", (Route route) => false);
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            //使用公共的header，传入title
+            commonHeader(title: "小区列表",),
             Expanded(
               child: Container(
                 width: _media.width,
@@ -166,6 +139,9 @@ class _cellListState extends State<cellList> {
                           icon: Icon(Icons.add),
                           color: Colors.green,
                           iconSize: 100,
+                          onPressed: (){
+                            Navigator.pushNamed(context, "cellInformation");
+                          },
                         ),
                       ),
                     )
