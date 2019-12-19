@@ -70,7 +70,7 @@ class _cellListState extends State<cellList> {
                   IconButton(
                     icon:Icon(Icons.delete, color: Colors.redAccent,),
                     onPressed: (){
-                      Navigator.pushNamed(context, "cellInformation");
+                      
                     },
                   ),
                 ],

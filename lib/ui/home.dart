@@ -38,6 +38,9 @@ class _homeState extends State<home> {
                 ),
                 ListTile(
                   title: Text("开门记录"),
+                  onTap: (){
+                    Navigator.pushNamed(context, "openRecord");
+                  },
                 )
               ],
             ),
