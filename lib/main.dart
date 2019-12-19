@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,  //去除右上角的debug标签
-      home: openRecord(),
+      home: login(),
       routes: <String,WidgetBuilder>{
         "login":(BuildContext context) => login(),  //登录页面
         "home":(BuildContext context) => home(),   //主页
