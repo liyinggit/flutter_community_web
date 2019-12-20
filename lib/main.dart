@@ -33,14 +33,13 @@ class MyApp extends StatelessWidget {
         "content": (BuildContext context) => content(),
         "Two": (BuildContext context) => Two(),
       },
-//      onGenerateRoute: (RouteSettings settings) {
-//        return MaterialPageRoute(builder: (context) {
-//          String routeName = settings.name;
-//          print(routeName);
-//          // 如果访问的路由页需要登录，但当前未登录，则直接返回登录页路由，
-//          // 引导用户登录；其它情况则正常打开路由。
-//        });
-//      },
+      onGenerateRoute: (RouteSettings settings) {
+        WidgetBuilder builder;
+        if (settings.name == '/') {
+          builder = (BuildContext context) => login();
+        }
+        return new MaterialPageRoute(builder: builder, settings: settings);
+      },
     );
   }
 }
