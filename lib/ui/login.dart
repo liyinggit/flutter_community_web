@@ -125,9 +125,11 @@ class _loginState extends State<login> {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        SizedBox(
-          height: _media.height * 0.2,
-        ),
+        (_media.height >= 800)
+            ? SizedBox(
+                height: _media.height * 0.2,
+              )
+            : Container(),
         Expanded(
             child: Container(
           //添加的背景图片
@@ -169,9 +171,11 @@ class _loginState extends State<login> {
             ],
           ),
         )),
-        SizedBox(
-          height: _media.height * 0.3,
-        ),
+        (_media.height >= 800)
+            ? SizedBox(
+                height: _media.height * 0.3,
+              )
+            : Container(),
       ],
     );
 
@@ -181,15 +185,19 @@ class _loginState extends State<login> {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        SizedBox(
-          height: _media.height * 0.15,
-        ),
+        (_media.height >= 800)
+            ? SizedBox(
+                height: _media.height * 0.15,
+              )
+            : Container(),
         Container(
           width: _media.width * 0.8,
           child: Center(
             child: new Text(
               "SYSTEM",
-              style: TextStyle(fontSize: 80, fontWeight: FontWeight.w400),
+              style: TextStyle(
+                  fontSize: (_media.height >= 800) ? 80 : 40,
+                  fontWeight: FontWeight.w400),
             ),
           ),
         ),
@@ -227,20 +235,20 @@ class _loginState extends State<login> {
             ),
           ),
         ),
-        SizedBox(
-          height: _media.height * 0.15,
-        ),
+        (_media.height >= 800)
+            ? SizedBox(
+                height: _media.height * 0.15,
+              )
+            : Container(),
       ],
     );
 
     return new Scaffold(
-      body: (_media.height >= 800)
-          ? Container(
-              width: _media.width,
-              height: _media.height,
-              child: (_media.width >= 1200) ? LargeArea : SmallArea,
-            )
-          : Text("too small"),
+      body: Container(
+        width: _media.width,
+        height: _media.height,
+        child: (_media.width >= 1200) ? LargeArea : SmallArea,
+      ),
     );
   }
 }
