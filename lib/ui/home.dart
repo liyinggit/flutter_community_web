@@ -48,7 +48,6 @@ class home extends StatelessWidget {
               case 'cellList':
                 builder = (BuildContext _) =>cellList();
                 break;
-                //最开始的样子
               case 'openRecord':
                 builder = (BuildContext _) => openRecord();
                 break;

@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_community_web/common/adaptive.dart';
 import 'package:flutter_community_web/common/commonHeader.dart';
+
+import 'home.dart';
 
 class openRecord extends StatefulWidget {
   @override
@@ -22,7 +25,6 @@ class _openRecordState extends State<openRecord> {
   DateTime selectedDate = DateTime.now();
 
   Future<void> _selectDate(BuildContext context) async {
-
     final DateTime picked = await showDatePicker(
       context: context,
       initialDate: selectedDate,
@@ -33,11 +35,12 @@ class _openRecordState extends State<openRecord> {
     setState(() {
       selectedDate = picked;
     });
-
   }
 
   @override
   Widget build(BuildContext context) {
+    final bool isDesktop = isDisplayDesktop(context);
+
     final _media = MediaQuery.of(context).size;
 
     ///区域
@@ -178,10 +181,9 @@ class _openRecordState extends State<openRecord> {
                 child: DropdownButtonHideUnderline(
                   child: InputDecorator(
                     decoration: const InputDecoration(
-                      contentPadding: EdgeInsets.zero,
-                      border: OutlineInputBorder(),
-                      suffixIcon: Icon(Icons.arrow_drop_down_circle)
-                    ),
+                        contentPadding: EdgeInsets.zero,
+                        border: OutlineInputBorder(),
+                        suffixIcon: Icon(Icons.arrow_drop_down_circle)),
                   ),
                 ),
               ))
@@ -189,35 +191,63 @@ class _openRecordState extends State<openRecord> {
       ),
     );
 
-    return Material(
-      child: Container(
-        width: _media.width,
+    if (isDesktop) {
+      return Container(
         height: _media.height,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            //使用公共的header，传入title
-            commonHeader(
-              title: "开门记录",
-            ),
+        width: _media.width,
+        child: Row(
+          children: [
+            ListDrawer(),
+            VerticalDivider(width: 1),
             Expanded(
-              child: Container(
-                margin: EdgeInsets.only(top: 20),
-                child: Column(
-                  children: <Widget>[
-                    positionArea,
-                    SizedBox(
-                      height: 20,
-                    ),
-                    deviceText,
-                    timeText
-                  ],
+              child: Scaffold(
+                appBar: AdaptiveAppBar(
+                  isDesktop: isDesktop,
+                  title: "ACME",
+                ),
+                body: Container(
+                  margin: EdgeInsets.only(top: 20),
+                  child: Column(
+                    children: <Widget>[
+                      positionArea,
+                      SizedBox(
+                        height: 20,
+                      ),
+                      deviceText,
+                      timeText
+                    ],
+                  ),
                 ),
               ),
             )
           ],
         ),
-      ),
-    );
+      );
+    } else {
+      return Container(
+        width: _media.width,
+        height: _media.height,
+        child: Scaffold(
+          appBar: AdaptiveAppBar(
+            isDesktop: isDesktop,
+            title: "ACME",
+          ),
+          drawer: ListDrawer(),
+          body: Container(
+            margin: EdgeInsets.only(top: 20),
+            child: Column(
+              children: <Widget>[
+                positionArea,
+                SizedBox(
+                  height: 20,
+                ),
+                deviceText,
+                timeText
+              ],
+            ),
+          ),
+        ),
+      );
+    }
   }
 }

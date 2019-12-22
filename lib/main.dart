@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       //去除右上角的debug标签
-      home: home(),
+      home: SignUpPage(),
       routes: <String, WidgetBuilder>{
         "login": (BuildContext context) => login(),
         //登录页面
