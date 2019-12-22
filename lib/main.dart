@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_community_web/study/One.dart';
+import 'package:flutter_community_web/study/SignUpPage.dart';
 import 'package:flutter_community_web/study/Two.dart';
 import 'package:flutter_community_web/study/content.dart';
 import 'package:flutter_community_web/ui/cellInformation.dart';
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       //去除右上角的debug标签
-      home: login(),
+      home: home(),
       routes: <String, WidgetBuilder>{
         "login": (BuildContext context) => login(),
         //登录页面
@@ -32,13 +33,7 @@ class MyApp extends StatelessWidget {
         //学习的部分
         "content": (BuildContext context) => content(),
         "Two": (BuildContext context) => Two(),
-      },
-      onGenerateRoute: (RouteSettings settings) {
-        WidgetBuilder builder;
-        if (settings.name == '/') {
-          builder = (BuildContext context) => login();
-        }
-        return new MaterialPageRoute(builder: builder, settings: settings);
+        'SignUpPage': (BuildContext context) => SignUpPage(),
       },
     );
   }

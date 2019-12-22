@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_community_web/study/Two.dart';
 
 class One extends StatefulWidget {
   @override
@@ -11,7 +12,7 @@ class _OneState extends State<One> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Navigator'),
+        title: Text('PartNavigator'),
       ),
       body: Column(
         children: <Widget>[

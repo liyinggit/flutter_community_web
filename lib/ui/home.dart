@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_community_web/common/adaptive.dart';
+import 'package:flutter_community_web/study/One.dart';
+import 'package:flutter_community_web/ui/cellInformation.dart';
+import 'package:flutter_community_web/ui/cellList.dart';
+import 'package:flutter_community_web/ui/openRecord.dart';
 
 const appBarDesktopHeight = 60.0;
 
@@ -15,25 +19,46 @@ class home extends StatelessWidget {
 
     if (isDesktop) {
       return Material(
-          child: Container(
-        height: _media.height,
-        width: _media.width,
-        child: Row(
-          children: [
-            ListDrawer(),
-            VerticalDivider(width: 1),
-            Expanded(
-              child: Scaffold(
-                appBar: AdaptiveAppBar(
-                  isDesktop: isDesktop,
-                  title: "ACME",
-                ),
-                body: body,
-              ),
-            )
-          ],
+        child: Navigator(  //套了一个局部路由
+          initialRoute: 'body',
+          onGenerateRoute: (RouteSettings settings) {
+            WidgetBuilder builder;
+            switch (settings.name) {
+              case "body":
+                builder = (BuildContext _) => Container(
+                      height: _media.height,
+                      width: _media.width,
+                      child: Row(
+                        children: [
+                          ListDrawer(),
+                          VerticalDivider(width: 1),
+                          Expanded(
+                            child: Scaffold(
+                                appBar: AdaptiveAppBar(
+                                  isDesktop: isDesktop,
+                                  title: "ACME",
+                                ),
+                                body: body,
+                            ),
+                          )
+                        ],
+                      ),
+                    );
+                break;
+              case 'cellList':
+                builder = (BuildContext _) =>cellList();
+                break;
+                //最开始的样子
+              case 'openRecord':
+                builder = (BuildContext _) => openRecord();
+                break;
+              default:
+                throw Exception('Invalid route: ${settings.name}');
+            }
+            return MaterialPageRoute(builder: builder, settings: settings);
+          },
         ),
-      ));
+      );
     } else {
       return Container(
         width: _media.width,
