@@ -109,6 +109,36 @@ class _openRecordState extends State<openRecord> {
     int _rowsPerPage = 5;
     final DessertDataSource _dessertsDataSource = DessertDataSource();
 
+    ///选择下拉框
+    Widget dropDownArea = Container(
+      width: 0.2 * _media.width,
+      margin: EdgeInsets.only(left: 10),
+      child: DropdownButtonHideUnderline(
+        child: InputDecorator(
+          decoration: const InputDecoration(
+            hintText: '请选择',
+            contentPadding: EdgeInsets.zero,
+            border: OutlineInputBorder(),
+          ),
+          isEmpty: _activity == null,
+          child: DropdownButton<String>(
+            value: _activity,
+            onChanged: (String newValue) {
+              setState(() {
+                _activity = newValue;
+              });
+            },
+            items: _allActivities.map<DropdownMenuItem<String>>((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(value),
+              );
+            }).toList(),
+          ),
+        ),
+      ),
+    );
+
     ///区域
     Widget positionArea = Container(
       child: Row(
@@ -117,92 +147,9 @@ class _openRecordState extends State<openRecord> {
           Text(
             "区域: ",
           ),
-          Container(
-            width: 0.2 * _media.width,
-            child: DropdownButtonHideUnderline(
-              child: InputDecorator(
-                decoration: const InputDecoration(
-                  hintText: 'Choose an activity',
-                  contentPadding: EdgeInsets.zero,
-                  border: OutlineInputBorder(),
-                ),
-                isEmpty: _activity == null,
-                child: DropdownButton<String>(
-                  value: _activity,
-                  onChanged: (String newValue) {
-                    setState(() {
-                      _activity = newValue;
-                    });
-                  },
-                  items: _allActivities
-                      .map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                ),
-              ),
-            ),
-          ),
-          Container(
-            width: 0.2 * _media.width,
-            margin: EdgeInsets.only(left: 10),
-            child: DropdownButtonHideUnderline(
-              child: InputDecorator(
-                decoration: const InputDecoration(
-                  hintText: 'Choose an activity',
-                  contentPadding: EdgeInsets.zero,
-                  border: OutlineInputBorder(),
-                ),
-                isEmpty: _activity == null,
-                child: DropdownButton<String>(
-                  value: _activity,
-                  onChanged: (String newValue) {
-                    setState(() {
-                      _activity = newValue;
-                    });
-                  },
-                  items: _allActivities
-                      .map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                ),
-              ),
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.only(left: 10),
-            width: 0.2 * _media.width,
-            child: DropdownButtonHideUnderline(
-              child: InputDecorator(
-                decoration: const InputDecoration(
-                  hintText: 'Choose an activity',
-                  contentPadding: EdgeInsets.zero,
-                  border: OutlineInputBorder(),
-                ),
-                isEmpty: _activity == null,
-                child: DropdownButton<String>(
-                  value: _activity,
-                  onChanged: (String newValue) {
-                    setState(() {
-                      _activity = newValue;
-                    });
-                  },
-                  items: _allActivities
-                      .map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                ),
-              ),
-            ),
-          )
+          dropDownArea,
+          dropDownArea,
+          dropDownArea,
         ],
       ),
     );

@@ -4,6 +4,7 @@ import 'package:flutter_community_web/study/One.dart';
 import 'package:flutter_community_web/ui/cellInformation.dart';
 import 'package:flutter_community_web/ui/cellList.dart';
 import 'package:flutter_community_web/ui/openRecord.dart';
+import 'package:flutter_community_web/ui/userInfo.dart';
 
 const appBarDesktopHeight = 60.0;
 
@@ -50,6 +51,9 @@ class home extends StatelessWidget {
                 break;
               case 'openRecord':
                 builder = (BuildContext _) => openRecord();
+                break;
+              case "userInfo":
+                builder = (BuildContext _) => userInfo();
                 break;
               default:
                 throw Exception('Invalid route: ${settings.name}');
@@ -122,6 +126,9 @@ class _ListDrawerState extends State<ListDrawer> {
                   children: <Widget>[
                     ListTile(
                       title: Text("业主资料"),
+                      onTap: () {
+                        Navigator.pushReplacementNamed(context, "userInfo");
+                      },
                     ),
                   ],
                 ),

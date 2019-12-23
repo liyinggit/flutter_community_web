@@ -8,6 +8,7 @@ import 'package:flutter_community_web/ui/cellList.dart';
 import 'package:flutter_community_web/ui/home.dart';
 import 'package:flutter_community_web/ui/login.dart';
 import 'package:flutter_community_web/ui/openRecord.dart';
+import 'package:flutter_community_web/ui/userInfo.dart';
 
 void main() => runApp(MyApp());
 
@@ -29,6 +30,8 @@ class MyApp extends StatelessWidget {
 //        "cellInformation": (BuildContext context) => cellInformation(),
         //小区信息编辑
         "openRecord": (BuildContext context) => openRecord(),
+        //业主信息
+        "userInfo":(BuildContext context) => userInfo(),
 
         //学习的部分
         "content": (BuildContext context) => content(),
