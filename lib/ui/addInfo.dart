@@ -53,7 +53,7 @@ class DessertDataSource extends DataTableSource {
         DataCell(Text('${dessert.bind}')),
         DataCell(Row(
           children: <Widget>[
-            ButtonArea(title:"删除" ,),
+            ButtonArea(title: "删除",),
             ButtonArea(title: "修改",)
           ],
         ))
@@ -90,7 +90,9 @@ class _bodyState extends State<body> {
     final DessertDataSource _dessertsDataSource = DessertDataSource();
 
     final bool isDesktop = isDisplayDesktop(context);
-    final _media = MediaQuery.of(context).size;
+    final _media = MediaQuery
+        .of(context)
+        .size;
 
     ///文本区域
     Widget textArea = Container(
@@ -99,7 +101,7 @@ class _bodyState extends State<body> {
         decoration: InputDecoration(
             contentPadding: EdgeInsets.all(10.0),
             border:
-                OutlineInputBorder(borderRadius: BorderRadius.circular(10.0))),
+            OutlineInputBorder(borderRadius: BorderRadius.circular(10.0))),
       ),
     );
 
@@ -124,7 +126,7 @@ class _bodyState extends State<body> {
 
     ///一堆按钮
     Widget buttonArea = Container(
-      alignment: Alignment.topLeft,
+      alignment: Alignment.center,
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
@@ -146,6 +148,7 @@ class _bodyState extends State<body> {
 
     ///table
     Widget userTable = Container(
+      alignment: Alignment.center,
       width: _media.width * 0.5,
       height: _media.height * 0.5,
       child: ListView(
@@ -179,6 +182,17 @@ class _bodyState extends State<body> {
       ),
     );
 
+    Widget saveButton = Container(
+      alignment: Alignment.center,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          ButtonArea(title: "保存",),
+          ButtonArea(title: "取消",),
+        ],
+      ),
+    );
+
     return Column(
       children: <Widget>[
         topArea,
@@ -189,10 +203,11 @@ class _bodyState extends State<body> {
         SizedBox(
           height: 20.0,
         ),
-        Expanded(
-          child:userTable ,
-        )
-
+        userTable,
+        SizedBox(
+          height: 20.0,
+        ),
+        saveButton,
       ],
     );
   }
@@ -202,7 +217,9 @@ class addInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool isDesktop = isDisplayDesktop(context);
-    final _media = MediaQuery.of(context).size;
+    final _media = MediaQuery
+        .of(context)
+        .size;
     return Container(
       width: _media.width,
       height: _media.height,
