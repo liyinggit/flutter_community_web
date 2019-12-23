@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_community_web/common/adaptive.dart';
+import 'package:flutter_community_web/ui/addInfo.dart';
 import 'package:flutter_community_web/ui/cellInformation.dart';
 import 'package:flutter_community_web/ui/home.dart';
 
@@ -74,7 +75,7 @@ class _bodyState extends State<body> {
                       color: Colors.green,
                     ),
                     onPressed: () {
-                      Navigator.pushNamed(context, "cellInformation");
+                      Navigator.pushNamed(context, "addInfo");
                     },
                   ),
                   IconButton(
@@ -164,29 +165,44 @@ class cellList extends StatelessWidget {
             ListDrawer(),
             VerticalDivider(width: 1),
             Expanded(
-              child: Scaffold(
-                appBar: AdaptiveAppBar(
-                  isDesktop: isDesktop,
-                  title: "小区列表",
-                ),
-                body: Navigator(
-                  initialRoute: 'cellList',
-                  onGenerateRoute: (RouteSettings settings) {
-                    WidgetBuilder builder;
-                    switch (settings.name) {
-                      case 'cellList':
-                        builder = (BuildContext _) => body();
-                        break;
-                      case 'cellInformation':
-                        builder = (BuildContext _) => cellInformation();
-                        break;
-                      default:
-                        throw Exception('Invalid route: ${settings.name}');
-                    }
-                    return MaterialPageRoute(
-                        builder: builder, settings: settings);
-                  },
-                ),
+              child: Navigator(
+                initialRoute: 'cellList',
+                onGenerateRoute: (RouteSettings settings) {
+                  WidgetBuilder builder;
+                  switch (settings.name) {
+                    case 'cellList':
+                      builder = (BuildContext _) =>   Scaffold(
+                          appBar: AdaptiveAppBar(
+                            isDesktop: isDesktop,
+                            title: "小区列表",
+                          ),
+                          body:body()
+                      );
+                      break;
+                    case 'cellInformation':
+                      builder = (BuildContext _) =>   Scaffold(
+                          appBar: AdaptiveAppBar(
+                            isDesktop: isDesktop,
+                            title: "小区信息",
+                          ),
+                          body:cellInformation()
+                      );
+                      break;
+                    case "addInfo":
+                      builder = (BuildContext buildContext) =>   Scaffold(
+                          appBar: AdaptiveAppBar(
+                            isDesktop: isDesktop,
+                            title: "新增住户区",
+                          ),
+                          body:addInfo()
+                      );
+                      break;
+                    default:
+                      throw Exception('Invalid route: ${settings.name}');
+                  }
+                  return MaterialPageRoute(
+                      builder: builder, settings: settings);
+                },
               ),
             )
           ],
@@ -212,6 +228,9 @@ class cellList extends StatelessWidget {
                   break;
                 case 'cellInformation':
                   builder = (BuildContext _) => cellInformation();
+                  break;
+                case "addInfo":
+                  builder = (BuildContext _) => addInfo();
                   break;
                 default:
                   throw Exception('Invalid route: ${settings.name}');

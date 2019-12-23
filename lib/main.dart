@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_community_web/study/One.dart';
 import 'package:flutter_community_web/study/SignUpPage.dart';
 import 'package:flutter_community_web/study/Two.dart';
 import 'package:flutter_community_web/study/content.dart';
-import 'package:flutter_community_web/ui/cellInformation.dart';
 import 'package:flutter_community_web/ui/cellList.dart';
 import 'package:flutter_community_web/ui/home.dart';
 import 'package:flutter_community_web/ui/login.dart';
@@ -26,12 +24,10 @@ class MyApp extends StatelessWidget {
         "home": (BuildContext context) => home(),
         //主页
         "cellList": (BuildContext context) => cellList(),
-        //小区列表
-//        "cellInformation": (BuildContext context) => cellInformation(),
         //小区信息编辑
         "openRecord": (BuildContext context) => openRecord(),
         //业主信息
-        "userInfo":(BuildContext context) => userInfo(),
+        "userInfo": (BuildContext context) => userInfo(),
 
         //学习的部分
         "content": (BuildContext context) => content(),
