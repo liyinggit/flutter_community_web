@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+///官网上的Navigator例子
 class CollectPersonalInfoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

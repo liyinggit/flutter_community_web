@@ -1,21 +1,22 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_community_web/common/adaptive.dart';
-import 'package:flutter_community_web/common/commonHeader.dart';
+import 'package:flutter_community_web/ui/cellInformation.dart';
 import 'package:flutter_community_web/ui/home.dart';
 
-class cellList extends StatefulWidget {
+class body extends StatefulWidget {
   @override
-  _cellListState createState() => _cellListState();
+  _bodyState createState() => _bodyState();
 }
 
-class _cellListState extends State<cellList> {
+class _bodyState extends State<body> {
   @override
   Widget build(BuildContext context) {
     final bool isDesktop = isDisplayDesktop(context);
     final _media = MediaQuery.of(context).size;
     print(_media);
 
+    ///每个元素
     Widget item = Container(
       width: 0.6 * _media.width,
       height: 0.2 * _media.width,
@@ -98,7 +99,63 @@ class _cellListState extends State<cellList> {
       ),
     );
 
-    if(isDesktop){
+    Widget body = Material(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Container(
+            width: _media.width,
+            height: _media.height * 0.8,
+            child: ListView.separated(
+              itemBuilder: (BuildContext context, int index) {
+                return Center(
+                  child: item,
+                );
+              },
+              itemCount: 5,
+              separatorBuilder: (BuildContext context, int index) {
+                return Divider(
+                  color: Colors.white,
+                  height: 10,
+                );
+              },
+            ),
+          ),
+          Center(
+            child: Container(
+              width: 0.6 * _media.width,
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                      blurRadius: 10, color: Colors.black12, spreadRadius: 2)
+                ],
+                color: Colors.grey[500],
+              ),
+              child: IconButton(
+                icon: Icon(Icons.add),
+                color: Colors.green,
+                iconSize: 100,
+                onPressed: () {
+                  Navigator.of(context).pushNamed("cellInformation");
+                },
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+    return body;
+  }
+}
+
+class cellList extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final bool isDesktop = isDisplayDesktop(context);
+    final _media = MediaQuery.of(context).size;
+
+    if (isDesktop) {
       return Container(
         height: _media.height,
         width: _media.width,
@@ -108,120 +165,63 @@ class _cellListState extends State<cellList> {
             VerticalDivider(width: 1),
             Expanded(
               child: Scaffold(
-                  appBar: AdaptiveAppBar(
-                    isDesktop: isDesktop,
-                    title: "ACME",
-                  ),
-                  body: Material(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Container(
-                          width: _media.width,
-                          height: _media.height * 0.8,
-                          child: ListView.separated(
-                            itemBuilder: (BuildContext context, int index) {
-                              return Center(
-                                child: item,
-                              );
-                            },
-                            itemCount: 5,
-                            separatorBuilder: (BuildContext context, int index) {
-                              return Divider(
-                                color: Colors.white,
-                                height: 10,
-                              );
-                            },
-                          ),
-                        ),
-                        Center(
-                          child: Container(
-                            width: 0.6 * _media.width,
-                            decoration: BoxDecoration(
-                              boxShadow: [
-                                BoxShadow(
-                                    blurRadius: 10, color: Colors.black12, spreadRadius: 2)
-                              ],
-                              color: Colors.grey[500],
-                            ),
-                            child: IconButton(
-                              icon: Icon(Icons.add),
-                              color: Colors.green,
-                              iconSize: 100,
-                              onPressed: () {
-                                Navigator.pushNamed(context, "cellInformation");
-                              },
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
+                appBar: AdaptiveAppBar(
+                  isDesktop: isDesktop,
+                  title: "小区列表",
+                ),
+                body: Navigator(
+                  initialRoute: 'cellList',
+                  onGenerateRoute: (RouteSettings settings) {
+                    WidgetBuilder builder;
+                    switch (settings.name) {
+                      case 'cellList':
+                        builder = (BuildContext _) => body();
+                        break;
+                      case 'cellInformation':
+                        builder = (BuildContext _) => cellInformation();
+                        break;
+                      default:
+                        throw Exception('Invalid route: ${settings.name}');
+                    }
+                    return MaterialPageRoute(
+                        builder: builder, settings: settings);
+                  },
+                ),
               ),
             )
           ],
         ),
       );
-    }else{
+    } else {
       return Container(
         width: _media.width,
         height: _media.height,
         child: Scaffold(
           appBar: AdaptiveAppBar(
             isDesktop: isDesktop,
-            title: "ACME",
+            title: "小区列表",
           ),
           drawer: ListDrawer(),
-          body: Material(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Container(
-                  width: _media.width,
-                  height: _media.height * 0.8,
-                  child: ListView.separated(
-                    itemBuilder: (BuildContext context, int index) {
-                      return Center(
-                        child: item,
-                      );
-                    },
-                    itemCount: 5,
-                    separatorBuilder: (BuildContext context, int index) {
-                      return Divider(
-                        color: Colors.white,
-                        height: 10,
-                      );
-                    },
-                  ),
-                ),
-                Center(
-                  child: Container(
-                    width: 0.6 * _media.width,
-                    decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                            blurRadius: 10, color: Colors.black12, spreadRadius: 2)
-                      ],
-                      color: Colors.grey[500],
-                    ),
-                    child: IconButton(
-                      icon: Icon(Icons.add),
-                      color: Colors.green,
-                      iconSize: 100,
-                      onPressed: () {
-                        Navigator.pushNamed(context, "cellInformation");
-                      },
-                    ),
-                  ),
-                )
-              ],
-            ),
+          body: Navigator(
+            initialRoute: 'cellList',
+            onGenerateRoute: (RouteSettings settings) {
+              WidgetBuilder builder;
+              switch (settings.name) {
+                case 'cellList':
+                  builder = (BuildContext _) => body();
+                  break;
+                case 'cellInformation':
+                  builder = (BuildContext _) => cellInformation();
+                  break;
+                default:
+                  throw Exception('Invalid route: ${settings.name}');
+              }
+              return MaterialPageRoute(
+                  builder: builder, settings: settings);
+            },
           ),
         ),
       );
     }
-
   }
 }

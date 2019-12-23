@@ -102,13 +102,13 @@ class _ListDrawerState extends State<ListDrawer> {
                     ListTile(
                       title: Text("小区列表"),
                       onTap: () {
-                        Navigator.pushNamed(context, "cellList");
+                        Navigator.pushReplacementNamed(context, "cellList");
                       },
                     ),
                     ListTile(
                       title: Text("开门记录"),
                       onTap: () {
-                        Navigator.pushNamed(context, "openRecord");
+                        Navigator.pushReplacementNamed(context, "openRecord");
                       },
                     )
                   ],

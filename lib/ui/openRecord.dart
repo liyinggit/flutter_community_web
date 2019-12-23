@@ -191,6 +191,21 @@ class _openRecordState extends State<openRecord> {
       ),
     );
 
+    ///主要的内容
+    Widget body = Container(
+      margin: EdgeInsets.only(top: 20),
+      child: Column(
+        children: <Widget>[
+          positionArea,
+          SizedBox(
+            height: 20,
+          ),
+          deviceText,
+          timeText
+        ],
+      ),
+    );
+
     if (isDesktop) {
       return Container(
         height: _media.height,
@@ -203,21 +218,9 @@ class _openRecordState extends State<openRecord> {
               child: Scaffold(
                 appBar: AdaptiveAppBar(
                   isDesktop: isDesktop,
-                  title: "ACME",
+                  title: "开门记录",
                 ),
-                body: Container(
-                  margin: EdgeInsets.only(top: 20),
-                  child: Column(
-                    children: <Widget>[
-                      positionArea,
-                      SizedBox(
-                        height: 20,
-                      ),
-                      deviceText,
-                      timeText
-                    ],
-                  ),
-                ),
+                body: body,
               ),
             )
           ],
@@ -230,22 +233,10 @@ class _openRecordState extends State<openRecord> {
         child: Scaffold(
           appBar: AdaptiveAppBar(
             isDesktop: isDesktop,
-            title: "ACME",
+            title: "开门记录",
           ),
           drawer: ListDrawer(),
-          body: Container(
-            margin: EdgeInsets.only(top: 20),
-            child: Column(
-              children: <Widget>[
-                positionArea,
-                SizedBox(
-                  height: 20,
-                ),
-                deviceText,
-                timeText
-              ],
-            ),
-          ),
+          body:body,
         ),
       );
     }

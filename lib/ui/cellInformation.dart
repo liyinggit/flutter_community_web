@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_community_web/common/adaptive.dart';
 import 'package:flutter_community_web/common/commonHeader.dart';
 
 class cellInformation extends StatefulWidget {
@@ -11,6 +12,7 @@ class _cellInformationState extends State<cellInformation> {
   @override
   Widget build(BuildContext context) {
     final _media = MediaQuery.of(context).size;
+    final bool isDesktop = isDisplayDesktop(context);
 
     Widget cellText = Container(
       child: Row(
@@ -81,13 +83,9 @@ class _cellInformationState extends State<cellInformation> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            //使用公共的header，传入title
-            commonHeader(
-              title: "小区信息",
-            ),
             Expanded(
               child: Container(
-                width: 0.3 * _media.width,
+                width:isDesktop? 0.3 * _media.width : _media.width,
                 margin: EdgeInsets.all(20.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
