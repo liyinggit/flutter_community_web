@@ -1,10 +1,12 @@
 import 'dart:html';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_community_web/common/adaptive.dart';
 import 'package:flutter_community_web/tree/organ.dart';
 import 'package:flutter_community_web/tree/tree.dart';
 import 'package:flutter_community_web/common/buttonArea.dart';
+import 'package:flutter_community_web/ui/home.dart';
 
 class Dessert {
   Dessert(this.address, this.name, this.phone, this.bind);
@@ -53,8 +55,12 @@ class DessertDataSource extends DataTableSource {
         DataCell(Text('${dessert.bind}')),
         DataCell(Row(
           children: <Widget>[
-            ButtonArea(title: "删除",),
-            ButtonArea(title: "修改",)
+            ButtonArea(
+              title: "删除",
+            ),
+            ButtonArea(
+              title: "修改",
+            )
           ],
         ))
       ],
@@ -71,8 +77,7 @@ class DessertDataSource extends DataTableSource {
   int get selectedRowCount => _selectedCount;
 
   void _selectAll(bool checked) {
-    for (Dessert dessert in _desserts)
-      dessert.selected = checked;
+    for (Dessert dessert in _desserts) dessert.selected = checked;
     _selectedCount = checked ? _desserts.length : 0;
     notifyListeners();
   }
@@ -90,9 +95,7 @@ class _bodyState extends State<body> {
     final DessertDataSource _dessertsDataSource = DessertDataSource();
 
     final bool isDesktop = isDisplayDesktop(context);
-    final _media = MediaQuery
-        .of(context)
-        .size;
+    final _media = MediaQuery.of(context).size;
 
     ///文本区域
     Widget textArea = Container(
@@ -101,7 +104,7 @@ class _bodyState extends State<body> {
         decoration: InputDecoration(
             contentPadding: EdgeInsets.all(10.0),
             border:
-            OutlineInputBorder(borderRadius: BorderRadius.circular(10.0))),
+                OutlineInputBorder(borderRadius: BorderRadius.circular(10.0))),
       ),
     );
 
@@ -126,9 +129,9 @@ class _bodyState extends State<body> {
 
     ///一堆按钮
     Widget buttonArea = Container(
-      alignment: Alignment.center,
       child: Row(
-        mainAxisSize: MainAxisSize.min,
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           ButtonArea(
             title: "删除",
@@ -148,9 +151,7 @@ class _bodyState extends State<body> {
 
     ///table
     Widget userTable = Container(
-      alignment: Alignment.center,
-      width: _media.width * 0.5,
-      height: _media.height * 0.5,
+      height: _media.height * 0.6,
       child: ListView(
         padding: const EdgeInsets.all(20.0),
         children: <Widget>[
@@ -158,7 +159,6 @@ class _bodyState extends State<body> {
             header: const Text('业主信息'),
             rowsPerPage: _rowsPerPage,
             onSelectAll: _dessertsDataSource._selectAll,
-
             columns: <DataColumn>[
               DataColumn(
                 label: const Text('地址'),
@@ -183,32 +183,39 @@ class _bodyState extends State<body> {
     );
 
     Widget saveButton = Container(
-      alignment: Alignment.center,
       child: Row(
         mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          ButtonArea(title: "保存",),
-          ButtonArea(title: "取消",),
+          ButtonArea(
+            title: "保存",
+          ),
+          ButtonArea(
+            title: "取消",
+          ),
         ],
       ),
     );
 
-    return Column(
-      children: <Widget>[
-        topArea,
-        SizedBox(
-          height: 20.0,
-        ),
-        buttonArea,
-        SizedBox(
-          height: 20.0,
-        ),
-        userTable,
-        SizedBox(
-          height: 20.0,
-        ),
-        saveButton,
-      ],
+    return Container(
+      alignment: Alignment.centerLeft,
+      child: ListView(
+        children: <Widget>[
+          topArea,
+          SizedBox(
+            height: 20.0,
+          ),
+          buttonArea,
+          SizedBox(
+            height: 20.0,
+          ),
+          userTable,
+          SizedBox(
+            height: 20.0,
+          ),
+          saveButton,
+        ],
+      ),
     );
   }
 }
@@ -217,9 +224,7 @@ class addInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool isDesktop = isDisplayDesktop(context);
-    final _media = MediaQuery
-        .of(context)
-        .size;
+    final _media = MediaQuery.of(context).size;
     return Container(
       width: _media.width,
       height: _media.height,
@@ -229,7 +234,9 @@ class addInfo extends StatelessWidget {
             width: _media.width * 0.2,
             child: Tree(_buildData()),
           ),
-          body()
+          Expanded(
+            child: body(),
+          )
         ],
       ),
     );
