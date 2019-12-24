@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_community_web/common/adaptive.dart';
+import 'package:intl/intl.dart';
 
 import 'home.dart';
 
@@ -36,7 +38,6 @@ class DessertDataSource extends DataTableSource {
     Dessert('4', 'D201990', '一键开门', '祈福新村摘星阁A栋', '2019-12-16 12:00', '同意'),
     Dessert('5', 'D201990', '一键开门', '祈福新村摘星阁A栋', '2019-12-16 12:00', '同意'),
   ];
-
 
   int _selectedCount = 0;
 
@@ -85,20 +86,8 @@ class _openRecordState extends State<openRecord> {
   ];
   String _activity = 'fishing';
 
-  DateTime selectedDate = DateTime.now();
-
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime picked = await showDatePicker(
-      context: context,
-      initialDate: selectedDate,
-      firstDate: DateTime(2015, 8),
-      lastDate: DateTime(2101),
-    );
-
-    setState(() {
-      selectedDate = picked;
-    });
-  }
+  DateTime _fromDate = DateTime.now();
+  DateTime _toDate = DateTime.now();
 
   @override
   Widget build(BuildContext context) {
@@ -141,11 +130,12 @@ class _openRecordState extends State<openRecord> {
 
     ///区域
     Widget positionArea = Container(
+      alignment: Alignment.centerLeft,
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Text(
-            "区域: ",
+            "区  域: ",
           ),
           dropDownArea,
           dropDownArea,
@@ -156,19 +146,22 @@ class _openRecordState extends State<openRecord> {
 
     ///设备号
     Widget deviceText = Container(
-      width: 0.3 * _media.width,
+      alignment: Alignment.centerLeft,
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Text(
             "设备号: ",
           ),
-          Expanded(
-            child: TextField(
-              decoration: InputDecoration(
-                  contentPadding: EdgeInsets.all(10.0),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0))),
+          FittedBox(
+            child: Container(
+              width: _media.width * 0.2,
+              child: TextField(
+                decoration: InputDecoration(
+                    contentPadding: EdgeInsets.all(10.0),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0))),
+              ),
             ),
           )
         ],
@@ -177,46 +170,37 @@ class _openRecordState extends State<openRecord> {
 
     ///时间选择
     Widget timeText = Container(
-//      width: 0.8 * _media.width,
+      alignment: Alignment.centerLeft,
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Text(
-            "时间: ",
+            "时  间: ",
           ),
           Container(
-            margin: EdgeInsets.only(left: 10),
-            width: 0.2 * _media.width,
-            child: InkWell(
-              onTap: () {
-                _selectDate(context);
+            child: _DateTimePicker(
+              width: 0.2 * _media.width,
+              selectedDate: _fromDate,
+              selectDate: (DateTime date) {
+                setState(() {
+                  _fromDate = date;
+                });
               },
-              child: DropdownButtonHideUnderline(
-                child: InputDecorator(
-                  decoration: const InputDecoration(
-                      contentPadding: EdgeInsets.zero,
-                      border: OutlineInputBorder(),
-                      suffixIcon: Icon(Icons.arrow_drop_down_circle)),
-                ),
-              ),
             ),
           ),
-          Text("~"),
           Container(
             margin: EdgeInsets.only(left: 10),
-            width: 0.2 * _media.width,
-            child: InkWell(
-              onTap: () {
-                _selectDate(context);
+            child: Text("~"),
+          ),
+          Container(
+            child: _DateTimePicker(
+              width: 0.2 * _media.width,
+              selectedDate: _toDate,
+              selectDate: (DateTime date) {
+                setState(() {
+                  _toDate = date;
+                });
               },
-              child: DropdownButtonHideUnderline(
-                child: InputDecorator(
-                  decoration: const InputDecoration(
-                      contentPadding: EdgeInsets.zero,
-                      border: OutlineInputBorder(),
-                      suffixIcon: Icon(Icons.arrow_drop_down_circle)),
-                ),
-              ),
             ),
           ),
         ],
@@ -225,8 +209,8 @@ class _openRecordState extends State<openRecord> {
 
     ///开门记录table
     Widget openRecordTable = Container(
-      width: _media.width * 0.45,
-      height: _media.height * 0.5,
+      alignment: Alignment.centerLeft,
+      height: _media.height * 0.8,
       child: ListView(
         padding: const EdgeInsets.all(20.0),
         children: <Widget>[
@@ -261,26 +245,25 @@ class _openRecordState extends State<openRecord> {
 
     ///主要的内容
     Widget body = Container(
-      alignment: Alignment.center,
-      margin: EdgeInsets.only(top: 20),
-      child: Column(
-        children: <Widget>[
-          positionArea,
-          SizedBox(
-            height: 20,
-          ),
-          deviceText,
-          SizedBox(
-            height: 20,
-          ),
-          timeText,
-          SizedBox(
-            height: 20,
-          ),
-          openRecordTable
-        ],
-      ),
-    );
+        width: (isDesktop) ? _media.width * 0.8 : _media.width,
+        margin: EdgeInsets.only(top: 20, left: 10),
+        child: ListView(
+          children: <Widget>[
+            positionArea,
+            SizedBox(
+              height: 20,
+            ),
+            deviceText,
+            SizedBox(
+              height: 20,
+            ),
+            timeText,
+            SizedBox(
+              height: 20,
+            ),
+            openRecordTable
+          ],
+        ));
 
     if (isDesktop) {
       return Container(
@@ -316,5 +299,55 @@ class _openRecordState extends State<openRecord> {
         ),
       );
     }
+  }
+}
+
+///日期选择框
+class _DateTimePicker extends StatelessWidget {
+  const _DateTimePicker({
+    Key key,
+    this.width,
+    this.selectedDate,
+    this.selectDate,
+  }) : super(key: key);
+
+  final double width;
+  final DateTime selectedDate;
+  final ValueChanged<DateTime> selectDate;
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime picked = await showDatePicker(
+      context: context,
+      initialDate: selectedDate,
+      firstDate: DateTime(2015, 8),
+      lastDate: DateTime(2101),
+    );
+    if (picked != null && picked != selectedDate) selectDate(picked);
+    print("选择的时间: $picked");
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final TextStyle valueStyle = Theme.of(context).textTheme.title;
+    return Container(
+      margin: EdgeInsets.only(left: 10),
+      width: width,
+      child: InkWell(
+        onTap: () {
+          _selectDate(context);
+        },
+        child: DropdownButtonHideUnderline(
+          child: InputDecorator(
+            decoration: InputDecoration(
+              contentPadding: EdgeInsets.zero,
+              border: OutlineInputBorder(),
+              suffixIcon: Icon(Icons.arrow_drop_down_circle),
+            ),
+            baseStyle: valueStyle,
+            child: Text(DateFormat.yMMMd().format(selectedDate), style: valueStyle),
+          ),
+        ),
+      ),
+    );
   }
 }

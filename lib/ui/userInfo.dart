@@ -16,7 +16,6 @@ class _userInfoState extends State<userInfo> {
     final bool isDesktop = isDisplayDesktop(context);
 
     final _media = MediaQuery.of(context).size;
-
     ///选择下拉框
     Widget dropDownArea = Container(
       width: 0.2 * _media.width,
@@ -61,21 +60,32 @@ class _userInfoState extends State<userInfo> {
 
     ///上传文件区域
     Widget uploadArea = Container(
+      alignment: Alignment.center,
       child: Row(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          ButtonArea(title: "选择文件",),
-          Expanded(
-            child: TextField(
-              decoration: InputDecoration(
-                  hintText: "只能上传xls，xlsx，csv文件",
-                  contentPadding: EdgeInsets.all(10.0),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0))),
+          ButtonArea(
+            title: "选择文件",
+            color: Colors.cyan,
+          ),
+          FittedBox(
+            child: Container(
+              margin: EdgeInsets.only(left: 10),
+              width: (isDesktop)?_media.width * 0.3 :_media.width *0.5,
+              child: TextField(
+                decoration: InputDecoration(
+                    hintText: "只能上传xls，xlsx，csv文件",
+                    contentPadding: EdgeInsets.all(10.0),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0))),
+              ),
             ),
           ),
-          ButtonArea(title: "添加",)
+          ButtonArea(
+            title: "添加",
+            color: Colors.green,
+          )
         ],
       ),
     );
@@ -86,12 +96,17 @@ class _userInfoState extends State<userInfo> {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          ButtonArea(title: "导入",),
-          ButtonArea(title: "取消",)
+          ButtonArea(
+            title: "导入",
+            color: Colors.blue,
+          ),
+          ButtonArea(
+            title: "取消",
+            color: Colors.lightBlue,
+          )
         ],
       ),
     );
-
 
     Widget body = Container(
       child: Column(
@@ -149,11 +164,14 @@ class _userInfoState extends State<userInfo> {
 ///button
 class ButtonArea extends StatefulWidget {
   final String title;
+  final Color color;
 
   const ButtonArea({
     Key key,
     @required this.title,
+    @required this.color,
   }) : super(key: key);
+
   @override
   _ButtonAraState createState() => _ButtonAraState();
 }
@@ -165,16 +183,18 @@ class _ButtonAraState extends State<ButtonArea> {
       height: 45.0,
       margin: EdgeInsets.only(left: 10),
       child: RaisedButton(
-        color: Colors.cyan,
+        color: widget.color,
         child: Text(
           widget.title,
           style: new TextStyle(color: Colors.white),
         ),
         //设置按钮圆角
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10.0)),
+        shape:
+            RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+        onPressed: (){
+
+        },
       ),
     );
   }
 }
-
