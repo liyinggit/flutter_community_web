@@ -15,51 +15,46 @@ class home extends StatelessWidget {
     final _media = MediaQuery.of(context).size;
 
     final body = SafeArea(
-      child: Text("hello"),
+      child: Container(
+        height: _media.height *0.8,
+        child: Center(
+          child:Column(
+            children: <Widget>[
+              SizedBox(height:0.2 * _media.height),
+              Expanded(
+                child: Column(
+                  children: <Widget>[
+                    Text("欢迎user登录SYSTEM",style: TextStyle(fontSize: 30),),
+                    Text("上次登录时间:",style: TextStyle(fontSize: 28),)
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
     );
 
     if (isDesktop) {
       return Material(
-        child: Navigator(  //套了一个局部路由
-          initialRoute: 'body',
-          onGenerateRoute: (RouteSettings settings) {
-            WidgetBuilder builder;
-            switch (settings.name) {
-              case "body":
-                builder = (BuildContext _) => Container(
-                      height: _media.height,
-                      width: _media.width,
-                      child: Row(
-                        children: [
-                          ListDrawer(),
-                          VerticalDivider(width: 1),
-                          Expanded(
-                            child: Scaffold(
-                                appBar: AdaptiveAppBar(
-                                  isDesktop: isDesktop,
-                                  title: "ACME",
-                                ),
-                                body: body,
-                            ),
-                          )
-                        ],
-                      ),
-                    );
-                break;
-              case 'cellList':
-                builder = (BuildContext _) =>cellList();
-                break;
-              case 'openRecord':
-                builder = (BuildContext _) => openRecord();
-                break;
-              case "userInfo":
-                builder = (BuildContext _) => userInfo();
-                break;
-              default:
-                throw Exception('Invalid route: ${settings.name}');
-            }
-            return MaterialPageRoute(builder: builder, settings: settings);
-          },
+        child: Container(
+          height: _media.height,
+          width: _media.width,
+          child: Row(
+            children: [
+              ListDrawer(),
+              VerticalDivider(width: 1),
+              Expanded(
+                child: Scaffold(
+                  appBar: AdaptiveAppBar(
+                    isDesktop: isDesktop,
+                    title: "ACME",
+                  ),
+                  body: body,
+                ),
+              )
+            ],
+          ),
         ),
       );
     } else {

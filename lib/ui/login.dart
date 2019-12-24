@@ -90,34 +90,33 @@ class _loginState extends State<login> {
 
     ///登录按钮
     Widget loginButtonArea = new Container(
-        height: 45.0,
-        child: Center(
-          child: Row(
-            children: <Widget>[
-              Container(
-                child: new RaisedButton(
-                  color: Colors.green,
-                  child: Text(
-                    "登录",
-                    style: new TextStyle(color: Colors.white),
-                  ),
-                  //设置按钮圆角
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0)),
-                  onPressed: () {
-                    Navigator.pushReplacementNamed(context, "home");
-                  },
-                ),
-                margin: EdgeInsets.only(right: 10),
+      height: 45.0,
+      child: Row(
+        children: <Widget>[
+          Container(
+            child: new RaisedButton(
+              color: Colors.green,
+              child: Text(
+                "登录",
+                style: new TextStyle(color: Colors.white),
               ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[new Text("忘记密码？"), new Text("请联系管理员")],
-              ),
-            ],
+              //设置按钮圆角
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0)),
+              onPressed: () {
+                Navigator.pushReplacementNamed(context, "home");
+              },
+            ),
+            margin: EdgeInsets.only(right: 10),
           ),
-        ));
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[new Text("忘记密码？"), new Text("请联系管理员")],
+          ),
+        ],
+      ),
+    );
 
     ///屏幕宽度大的
     Widget LargeArea = Column(
